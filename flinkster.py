@@ -14,19 +14,33 @@ car_rates = {
         "first_day": 60.0,
         "more_days": 39.0,
         "per_km": 0.26,
-    }
+    },
 }
+
 
 def calculateTimePriceDays(rates, duration):
     return rates["first_day"] + (rates["more_days"] * (duration - 1))
 
+
 def calculateDistancePrice(rates, distanceInKilometers):
     return distanceInKilometers * rates["per_km"]
 
-def calculateTripCost(car_category, days, distanceInKilometers):
-    print(f'Trip cost for rate {car_category}, for {days} days and {distanceInKilometers} kilometers')
-    rates = car_rates[car_category]
-    print(calculateTimePriceDays(rates, days) + calculateDistancePrice(rates, distanceInKilometers))
 
-calculateTripCost("klein", 3, 300)
-calculateTripCost("kompakt", 3, 300)
+def calculateTripCost(car_category, days, distanceInKilometers):
+    print(
+        f"Trip cost for rate {car_category}, for {days} days and {distanceInKilometers} kilometers"
+    )
+    rates = car_rates[car_category]
+    trip_cost = calculateTimePriceDays(rates, days) + calculateDistancePrice(
+        rates, distanceInKilometers
+    )
+    print(f"{trip_cost} €")
+    return trip_cost
+
+
+days = 3
+kilometers = 300
+
+cost_klein = calculateTripCost("klein", days, kilometers)
+cost_kompakt = calculateTripCost("kompakt", days, kilometers)
+print(f"Difference: {cost_kompakt - cost_klein} €")
